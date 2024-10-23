@@ -17,7 +17,7 @@ def clone_and_scan(repo_url):
         repo_name = repo_url.split('/')[-1]
 
     try:
-        Repo.clone_from(auth_repo_url, repo_name,branch='devlop')
+        Repo.clone_from(auth_repo_url, repo_name,branch='develop')
         print(f"Successfully cloned {repo_url} into {repo_name} dev branch")
     except Exception as e:
         print(f"Error cloning the repository: {e}")
