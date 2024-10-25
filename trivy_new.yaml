@@ -1,0 +1,32 @@
+name: Trivy Repo Scan
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  trivy-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run Trivy Repo Scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'repo'            # Specifies repository scan
+          format: 'table'               # Output format as table
+          output: 'trivy_report.json'   # Outputs to trivy_report.json
+
+      - name: Upload Trivy report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-repo-scan-results
+          path: trivy_report.json
